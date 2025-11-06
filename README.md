@@ -1,5 +1,4 @@
-# Kolekt  Kolekt  Kolekt  Kolekt 
-> (Não consegui pensar em um logo melhor por agora, mas essa é a ideia)
+# Kolekt  
 
 Um aplicativo web full-stack de coleta inteligente de links. Salve, organize e acesse seus recursos da web com títulos, descrições e imagens gerados automaticamente.
 
