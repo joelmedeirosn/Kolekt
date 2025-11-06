@@ -1,0 +1,26 @@
+import React from 'react';
+import { Outlet } from 'react-router-dom';
+import Navbar from '../components/Navbar';
+import { Box } from '@mui/material'; 
+
+function RootLayout() {
+    return (
+        <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+
+            <Navbar />
+
+            <Box
+                component="main"
+                sx={{
+                    flexGrow: 1, 
+                    py: 3, 
+                    px: 4, 
+                }}
+            >
+                <Outlet />
+            </Box>
+        </Box>
+    );
+}
+
+export default RootLayout;

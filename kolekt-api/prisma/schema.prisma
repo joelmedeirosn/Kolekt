@@ -1,0 +1,50 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL") // <-- Isso lê o seu arquivo .env
+}
+
+// Modelo de Usuário
+model User {
+  id          Int           @id @default(autoincrement())
+  email       String        @unique
+  password    String // Vamos salvar a senha criptografada (hash)
+  createdAt   DateTime      @default(now())
+  
+  // Relação: Um usuário pode ter VÁRIAS coleções
+  collections Collection[]
+}
+
+// Modelo de Coleção
+model Collection {
+  id          Int       @id @default(autoincrement())
+  title       String
+  createdAt   DateTime  @default(now())
+  
+  // Relação: A coleção pertence a UM usuário
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      Int
+  
+  // Relação: Uma coleção pode ter VÁRIOS links
+  links       Link[]
+}
+
+// Modelo de Link (o Card)
+model Link {
+  id          Int     @id @default(autoincrement())
+  url         String
+  title       String  // Título pego do scraping
+  description String? // Descrição pega do scraping (opcional)
+  imageUrl    String? // Imagem pega do scraping (opcional)
+  createdAt   DateTime @default(now())
+
+  // Relação: O link pertence a UMA coleção
+  collection  Collection @relation(fields: [collectionId], references: [id], onDelete: Cascade) // Se deletar a coleção, deleta os links
+  collectionId Int
+}
